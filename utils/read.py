@@ -1,9 +1,11 @@
 import pandas as pd
 
-def read_UCR_dataset_name(filepath=None):
+def read_UCR_dataset_name(filepath=None, bakeoff=True):
     df = pd.read_csv('DataSummary.csv')
-    return df['Name'].to_list()
-
+    if bakeoff:
+        return df[df['BakeOff'] == True]['Name'].to_list()
+    else:
+        return df['Name'].to_list()
 
 def read_UCRArchive(path_prefix, dataset):
     df_train = pd.read_csv(

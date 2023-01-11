@@ -7,7 +7,7 @@ class ExperimentSet:
         self.augments = augments
 
 
-    def run_experiments(self):
+    def run_all(self):
         for i in self.datasets:
             classifer = self.classier
             dataset = i
