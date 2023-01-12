@@ -9,7 +9,13 @@ from utils.read import reshape_new_to_old_format, reshape_old_to_new_format
 # TODO: Feature test
 # TODO: Describe FUnction
 class Experiment:
-    def __init__(self, clasifier=None, dataset=None, augment={'name': str(None), 'params': str(None)}, verbose=0):
+    def __init__(
+        self,
+        clasifier=None,
+        dataset=None,
+        augment={"name": str(None), "params": str(None)},
+        verbose=0,
+    ):
         self.clasifier = clasifier
         self.dataset = dataset
         self.augment = augment
@@ -17,7 +23,7 @@ class Experiment:
         self.evaluation_metric = {}
         self.verbose = verbose
 
-    def load_UCR_dataset(self, dataset:str=None):
+    def load_UCR_dataset(self, dataset: str = None):
         dataset_name = self.dataset if self.dataset else dataset
         x_train, y_train = load_UCR_UEA_dataset(
             dataset_name, split="train", return_X_y=True, return_type="numpy2D"
@@ -33,24 +39,24 @@ class Experiment:
             "x_test": x_test,
             "y_test": y_test,
         }
-    
+
     def augmentation(self):
-            if self.augment['name'] == 'None':
-                return
-            x_train = reshape_new_to_old_format(self.dataset['x_train'])
-            x_test = reshape_new_to_old_format(self.dataset['x_test'])
+        if self.augment["name"] == "None":
+            return
+        x_train = reshape_new_to_old_format(self.dataset["x_train"])
+        x_test = reshape_new_to_old_format(self.dataset["x_test"])
 
-            x_train_aug = self.augment['function'](x_train, **self.augment['params'])
-            x_test_aug = self.augment['function'](x_test,  **self.augment['params'])
+        x_train_aug = self.augment["function"](x_train, **self.augment["params"])
+        x_test_aug = self.augment["function"](x_test, **self.augment["params"])
 
-            self.dataset['x_train'] = reshape_old_to_new_format(x_train_aug)
-            self.dataset['x_test'] = reshape_old_to_new_format(x_test_aug)
+        self.dataset["x_train"] = reshape_old_to_new_format(x_train_aug)
+        self.dataset["x_test"] = reshape_old_to_new_format(x_test_aug)
 
     def train_classier(self):
-        self.clasifier['function'].fit(self.dataset["x_train"], self.dataset["y_train"])
+        self.clasifier["function"].fit(self.dataset["x_train"], self.dataset["y_train"])
 
     def predict(self):
-        self.y_pred = self.clasifier['function'].predict(self.dataset["x_test"])
+        self.y_pred = self.clasifier["function"].predict(self.dataset["x_test"])
 
     def evaluate(self):
         self.evaluation_metric["accuracy"] = accuracy_score(
@@ -65,15 +71,18 @@ class Experiment:
 
     def save_result(self):
         mlflow_save_result(
-            {'accuracy': self.evaluation_metric["accuracy"]}, 
-            {'model': self.clasifier['name']}, ## TODO: datapoint_shape
-            {'dataset': self.dataset['name'], "datapoint_shape": str(self.dataset['x_train'].shape) + 'x' +str(self.dataset['x_test'].shape), "number_of_class":len(set(list(self.dataset["y_test"])))},
-            {'augmentation': self.augment['name']},
-            [{
-                'data': self.augment['params'],'file_name':"dict/augmentation.json"
-            }]
-            )
-
+            {"accuracy": self.evaluation_metric["accuracy"]},
+            {"model": self.clasifier["name"]},  ## TODO: datapoint_shape
+            {
+                "dataset": self.dataset["name"],
+                "datapoint_shape": str(self.dataset["x_train"].shape)
+                + "x"
+                + str(self.dataset["x_test"].shape),
+                "number_of_class": len(set(list(self.dataset["y_test"]))),
+            },
+            {"augmentation": self.augment["name"]},
+            [{"data": self.augment["params"], "file_name": "dict/augmentation.json"}],
+        )
 
     def run_all(self):
         self.load_UCR_dataset()
