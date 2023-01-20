@@ -6,8 +6,8 @@ from utils.read import reshape_new_to_old_format, reshape_old_to_new_format
 
 
 # TODO: Verbose
-# TODO: Feature test
-# TODO: Describe FUnction
+# TODO: Feature unit-test:
+# TODO: Describe Function: Get Experiment class information
 class Experiment:
     def __init__(
         self,
@@ -72,7 +72,7 @@ class Experiment:
     def save_result(self):
         mlflow_save_result(
             {"accuracy": self.evaluation_metric["accuracy"]},
-            {"model": self.clasifier["name"]},  ## TODO: datapoint_shape
+            {"model": self.clasifier["name"]},
             {
                 "dataset": self.dataset["name"],
                 "datapoint_shape": str(self.dataset["x_train"].shape)
@@ -80,9 +80,15 @@ class Experiment:
                 + str(self.dataset["x_test"].shape),
                 "number_of_class": len(set(list(self.dataset["y_test"]))),
             },
-            {"augmentation": self.augment["name"]},
-            [{"data": self.augment["params"], "file_name": "dict/augmentation.json"}],
+            {
+                "augmentation": {
+                    "name": self.augment["name"],
+                    "params": self.augment["params"],
+                },
+            },
+            # [{"data": self.augment["params"], "file_name": "dict/augmentation.json"}],
         )
+        print(f'{self.clasifier["name"]}, {self.dataset["name"]}, ({self.augment["name"]}, {self.augment["params"]}) DONE')
 
     def run_all(self):
         self.load_UCR_dataset()
