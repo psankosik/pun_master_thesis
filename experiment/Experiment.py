@@ -46,8 +46,13 @@ class Experiment:
         x_train = reshape_new_to_old_format(self.dataset["x_train"])
         x_test = reshape_new_to_old_format(self.dataset["x_test"])
 
-        x_train_aug = self.augment["function"](x_train, **self.augment["params"])
-        x_test_aug = self.augment["function"](x_test, **self.augment["params"])
+        if self.augment['enter_label'] is not None:
+            x_train_aug = self.augment["function"](x_train, self.dataset["y_train"], **self.augment["params"])
+            x_test_aug = self.augment["function"](x_test, self.dataset["y_test"], **self.augment["params"])
+
+        else:
+            x_train_aug = self.augment["function"](x_train, **self.augment["params"])
+            x_test_aug = self.augment["function"](x_test, **self.augment["params"])
 
         self.dataset["x_train"] = reshape_old_to_new_format(x_train_aug)
         self.dataset["x_test"] = reshape_old_to_new_format(x_test_aug)

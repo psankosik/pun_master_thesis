@@ -1,0 +1,116 @@
+model	dataset_key	augmentation	param1_name	param1_value	param2_name	param2_value	BeetleFly	CinCECGTorso	ECG5000	FiftyWords	Ham	MoteStrain	OliveOil	PhalangesOutlinesCorrect	ScreenType	ShapesAll	
+minirocket	3	scaling	sigma	0.1													
+minirocket	3	scaling	sigma	0.5													
+minirocket	3	permutation	max_segments	5	seg_mode	equal											
+minirocket	3	permutation	max_segments	5	seg_mode	random											
+minirocket	3	permutation	max_segments	2	seg_mode	equal											
+minirocket	3	permutation	max_segments	4	seg_mode	equal											
+minirocket	3	permutation	max_segments	6	seg_mode	equal											
+minirocket	3	permutation	max_segments	8	seg_mode	equal											
+minirocket	3	permutation	max_segments	10	seg_mode	equal											
+minirocket	3	magnitude_warp	sigma	0.2	knot	2											
+minirocket	3	magnitude_warp	sigma	0.2	knot	4											
+minirocket	3	magnitude_warp	sigma	0.2	knot	6											
+minirocket	3	magnitude_warp	sigma	0.2	knot	8											
+minirocket	3	magnitude_warp	sigma	0.2	knot	10											
+minirocket	3	magnitude_warp	sigma	0.4	knot	2											
+minirocket	3	magnitude_warp	sigma	0.4	knot	4											
+minirocket	3	magnitude_warp	sigma	0.4	knot	6											
+minirocket	3	magnitude_warp	sigma	0.4	knot	8											
+minirocket	3	magnitude_warp	sigma	0.4	knot	10											
+minirocket	3	magnitude_warp	sigma	0.6	knot	2											
+minirocket	3	magnitude_warp	sigma	0.6	knot	4											
+minirocket	3	magnitude_warp	sigma	0.6	knot	6											
+minirocket	3	magnitude_warp	sigma	0.6	knot	8											
+minirocket	3	magnitude_warp	sigma	0.6	knot	10											
+minirocket	3	magnitude_warp	sigma	0.8	knot	2											
+minirocket	3	magnitude_warp	sigma	0.8	knot	4											
+minirocket	3	magnitude_warp	sigma	0.8	knot	6											
+minirocket	3	magnitude_warp	sigma	0.8	knot	8											
+minirocket	3	magnitude_warp	sigma	0.8	knot	10											
+minirocket	3	magnitude_warp	sigma	1	knot	2											
+minirocket	3	magnitude_warp	sigma	1	knot	4											
+minirocket	3	magnitude_warp	sigma	1	knot	6											
+minirocket	3	magnitude_warp	sigma	1	knot	8											
+minirocket	3	magnitude_warp	sigma	1	knot	10											
+minirocket	3	time_warp	sigma	0.2	knot	2											
+minirocket	3	time_warp	sigma	0.2	knot	4											
+minirocket	3	time_warp	sigma	0.2	knot	6											
+minirocket	3	time_warp	sigma	0.2	knot	8											
+minirocket	3	time_warp	sigma	0.2	knot	10											
+minirocket	3	time_warp	sigma	0.4	knot	2											
+minirocket	3	time_warp	sigma	0.4	knot	4											
+minirocket	3	time_warp	sigma	0.4	knot	6											
+minirocket	3	time_warp	sigma	0.4	knot	8											
+minirocket	3	time_warp	sigma	0.4	knot	10											
+minirocket	3	time_warp	sigma	0.6	knot	2											
+minirocket	3	time_warp	sigma	0.6	knot	4											
+minirocket	3	time_warp	sigma	0.6	knot	6											
+minirocket	3	time_warp	sigma	0.6	knot	8											
+minirocket	3	time_warp	sigma	0.6	knot	10											
+minirocket	3	time_warp	sigma	0.8	knot	2											
+minirocket	3	time_warp	sigma	0.8	knot	4											
+minirocket	3	time_warp	sigma	0.8	knot	6											
+minirocket	3	time_warp	sigma	0.8	knot	8											
+minirocket	3	time_warp	sigma	0.8	knot	10											
+minirocket	3	time_warp	sigma	1	knot	2											
+minirocket	3	time_warp	sigma	1	knot	4											
+minirocket	3	time_warp	sigma	1	knot	6											
+minirocket	3	time_warp	sigma	1	knot	8											
+minirocket	3	time_warp	sigma	1	knot	10											
+minirocket	3	window_slice	reduce_ratio	0.1			0.6	0.535	0.789	0.176	0.543	0.7	0.233	0.615	0.453	0.277	
+minirocket	3	window_slice	reduce_ratio	0.2			0.6	0.557	0.865	0.209	0.667	0.597	0.267	0.657	0.509	0.392	
+minirocket	3	window_slice	reduce_ratio	0.3			0.7	0.627	0.893	0.334	0.705	0.722	0.3	0.675	0.411	0.543	
+minirocket	3	window_slice	reduce_ratio	0.4			0.8	0.596	0.914	0.411	0.619	0.831	0.5	0.718	0.432	0.663	
+minirocket	3	window_slice	reduce_ratio	0.5			0.65	0.678	0.915	0.503	0.638	0.857	0.267	0.756	0.445	0.767	
+minirocket	3	window_slice	reduce_ratio	0.6			0.8	0.743	0.928	0.604	0.629	0.89	0.5	0.788	0.44	0.797	
+minirocket	3	window_slice	reduce_ratio	0.7			0.9	0.801	0.931	0.695	0.752	0.867	0.733	0.814	0.44	0.853	
+minirocket	3	window_slice	reduce_ratio	0.8			0.85	0.816	0.941	0.725	0.667	0.878	0.733	0.829	0.467	0.882	
+minirocket	3	window_slice	reduce_ratio	0.9			0.8	0.823	0.944	0.811	0.695	0.901	0.833	0.824	0.456	0.908	
+minirocket	3	window_slice	reduce_ratio	1			0.85	0.86	0.945	0.844	0.724	0.923	0.933	0.832	0.467	0.925	
+minirocket	3	window_slice	reduce_ratio	1.1			0.9	0.875	0.945	0.835	0.705	0.923	0.933	0.826	0.493	0.918	
+minirocket	3	window_slice	reduce_ratio	1.2			0.9	0.869	0.944	0.842	0.686	0.924	0.933	0.826	0.472	0.918	
+minirocket	3	window_slice	reduce_ratio	1.3			0.85	0.87	0.945	0.837	0.714	0.925	0.933	0.838	0.477	0.923	
+minirocket	3	window_slice	reduce_ratio	1.4			0.9	0.867	0.945	0.837	0.714	0.929	0.933	0.843	0.469	0.92	
+minirocket	3	window_slice	reduce_ratio	1.5			0.9	0.875	0.946	0.844	0.724	0.924	0.933	0.836	0.477	0.922	
+minirocket	3	window_slice	reduce_ratio	1.6			0.9	0.864	0.946	0.846	0.714	0.927	0.933	0.832	0.461	0.92	
+minirocket	3	window_slice	reduce_ratio	1.7			0.9	0.857	0.945	0.844	0.743	0.929	0.933	0.84	0.472	0.925	
+minirocket	3	window_slice	reduce_ratio	1.8			0.9	0.873	0.943	0.84	0.676	0.925	0.933	0.834	0.483	0.922	
+minirocket	3	window_slice	reduce_ratio	1.9			0.9	0.863	0.945	0.844	0.714	0.928	0.933	0.841	0.469	0.918	
+minirocket	3	window_slice	reduce_ratio	2			0.9	0.868	0.946	0.842	0.714	0.923	0.933	0.844	0.485	0.925	
+minirocket	3	window_warp	window_ratio	0.1													
+minirocket	3	window_warp	window_ratio	0.2													
+minirocket	3	window_warp	window_ratio	0.3													
+minirocket	3	window_warp	window_ratio	0.4													
+minirocket	3	window_warp	window_ratio	0.5													
+minirocket	3	window_warp	window_ratio	0.6													
+minirocket	3	window_warp	window_ratio	0.7													
+minirocket	3	window_warp	window_ratio	0.8													
+minirocket	3	window_warp	window_ratio	0.9													
+minirocket	3	spawner	sigma	0.01			0.95	0.591	0.934	0.56	0.819	0.808	0.6	0.774	0.485	0.887	
+minirocket	3	spawner	sigma	0.05			1	0.587	0.937	0.534	0.838	0.793	0.467	0.723	0.424	0.838	
+minirocket	3	spawner	sigma	0.09			0.95	0.612	0.933	0.543	0.838	0.835	0.4	0.707	0.453	0.822	
+minirocket	3	spawner	sigma	0.13			1	0.566	0.937	0.538	0.848	0.792	0.533	0.675	0.44	0.8	
+minirocket	3	spawner	sigma	0.17			0.9	0.512	0.939	0.519	0.829	0.771	0.467	0.664	0.469	0.797	
+minirocket	3	spawner	sigma	0.21			0.95	0.461	0.929	0.545	0.876	0.773	0.433	0.638	0.464	0.79	
+minirocket	3	spawner	sigma	0.25			0.95	0.523	0.934	0.516	0.838	0.787	0.433	0.64	0.461	0.792	
+minirocket	3	spawner	sigma	0.29			0.75	0.517	0.934	0.516	0.79	0.783	0.333	0.615	0.429	0.757	
+minirocket	3	spawner	sigma	0.33			0.85	0.49	0.93	0.457	0.838	0.756	0.333	0.631	0.395	0.75	
+minirocket	3	spawner	sigma	0.37			0.9	0.425	0.923	0.488	0.838	0.757	0.333	0.594	0.437	0.71	
+minirocket	3	spawner	sigma	0.41			1	0.526	0.929	0.481	0.771	0.764	0.367	0.598	0.424	0.72	
+minirocket	3	spawner	sigma	0.45			0.95	0.447	0.924	0.505	0.8	0.796	0.2	0.579	0.416	0.728	
+minirocket	3	spawner	sigma	0.49			0.8	0.496	0.931	0.429	0.724	0.754	0.433	0.568	0.448	0.655	
+minirocket	3	spawner	sigma	0.53			0.95	0.483	0.924	0.508	0.886	0.737	0.3	0.583	0.448	0.652	
+minirocket	3	spawner	sigma	0.57			0.95	0.462	0.928	0.451	0.8	0.724	0.533	0.599	0.448	0.663	
+minirocket	3	spawner	sigma	0.61			0.85	0.519	0.924	0.457	0.771	0.746	0.533	0.555	0.435	0.662	
+minirocket	3	spawner	sigma	0.65			0.75	0.433	0.926	0.464	0.733	0.781	0.333	0.597	0.467	0.655	
+minirocket	3	spawner	sigma	0.69			0.85	0.476	0.926	0.446	0.771	0.734	0.467	0.589	0.453	0.65	
+minirocket	3	spawner	sigma	0.73			0.9	0.474	0.924	0.437	0.724	0.758	0.4	0.572	0.464	0.63	
+minirocket	3	spawner	sigma	0.77			0.85	0.486	0.924	0.404	0.724	0.78	0.367	0.589	0.496	0.595	
+minirocket	3	spawner	sigma	0.81			0.85	0.478	0.921	0.407	0.752	0.728	0.467	0.596	0.419	0.608	
+minirocket	3	spawner	sigma	0.85			0.85	0.459	0.917	0.42	0.724	0.748	0.367	0.584	0.429	0.592	
+minirocket	3	spawner	sigma	0.89			0.85	0.439	0.921	0.402	0.695	0.75	0.267	0.578	0.496	0.585	
+minirocket	3	spawner	sigma	0.93			0.9	0.441	0.922	0.391	0.638	0.735	0.467	0.587	0.491	0.558	
+minirocket	3	spawner	sigma	0.97			0.85	0.443	0.917	0.407	0.752	0.742	0.433	0.593	0.477	0.558	
+minirocket	3	spawner	sigma	1.01			0.75	0.475	0.918	0.382	0.771	0.664	0.433	0.569	0.453	0.547	
+																	
