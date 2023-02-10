@@ -1,0 +1,1 @@
+{'name': 'window_slice_wdba', 'params': {'reduce_ratio': 0.8, 'batch_size': 6}}

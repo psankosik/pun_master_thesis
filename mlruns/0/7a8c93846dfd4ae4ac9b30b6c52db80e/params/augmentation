@@ -1,0 +1,1 @@
+{'name': 'magnitude_warp', 'params': {'sigma': 0.2, 'knot': 10}}
