@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/786371cc85b94430924debc8a4953c6c/artifacts
+end_time: 1676264019156
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 786371cc85b94430924debc8a4953c6c
+run_uuid: 786371cc85b94430924debc8a4953c6c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1676264019109
+status: 3
+tags: []
+user_id: Pongpanod.Sa
