@@ -1,3 +1,5 @@
+import numpy as np
+
 from sktime.datasets import load_UCR_UEA_dataset
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 
@@ -46,7 +48,7 @@ class Experiment:
         x_train = reshape_new_to_old_format(self.dataset["x_train"])
         x_test = reshape_new_to_old_format(self.dataset["x_test"])
 
-        if self.augment['enter_label']:
+        if self.augment.get('enter_label') == True:
             x_train_aug = self.augment["function"](x_train, self.dataset["y_train"], **self.augment["params"])
             x_test_aug = self.augment["function"](x_test, self.dataset["y_test"], **self.augment["params"])
 
@@ -54,14 +56,25 @@ class Experiment:
             x_train_aug = self.augment["function"](x_train, **self.augment["params"])
             x_test_aug = self.augment["function"](x_test, **self.augment["params"])
 
-        self.dataset["x_train"] = reshape_old_to_new_format(x_train_aug)
-        self.dataset["x_test"] = reshape_old_to_new_format(x_test_aug)
+        # Concat original or not
+        if self.augment.get('concat_original') == True:
+            x_train_aug = np.concatenate((x_train_aug, x_train), axis=0)
+            x_test_aug = np.concatenate((x_test_aug, x_test), axis=0)
+            self.dataset["y_train"] = np.concatenate((self.dataset["y_train"], self.dataset["y_train"]), axis=0)
+            self.dataset["y_test"] = np.concatenate((self.dataset["y_test"], self.dataset["y_test"]), axis=0)
+
+        self.dataset["x_train_aug"] = reshape_old_to_new_format(x_train_aug)
+        self.dataset["x_test_aug"] = reshape_old_to_new_format(x_test_aug)
 
     def train_classier(self):
-        self.clasifier["function"].fit(self.dataset["x_train"], self.dataset["y_train"])
+        if (self.dataset.get('x_train_aug').all() == None) or (self.dataset.get('x_test_aug').all() == None):
+            self.clasifier["function"].fit(self.dataset["x_train"], self.dataset["y_train"])
+        else:
+            print(f'Training Shape: {self.dataset["x_train_aug"].shape}, {self.dataset["y_train"].shape}')
+            self.clasifier["function"].fit(self.dataset["x_train_aug"], self.dataset["y_train"])
 
     def predict(self):
-        self.y_pred = self.clasifier["function"].predict(self.dataset["x_test"])
+        self.y_pred = self.clasifier["function"].predict(self.dataset["x_test_aug"])
 
     def evaluate(self):
         self.evaluation_metric["accuracy"] = accuracy_score(
@@ -80,7 +93,7 @@ class Experiment:
             {"model": self.clasifier["name"]},
             {
                 "dataset": self.dataset["name"],
-                "datapoint_shape": str(self.dataset["x_train"].shape)
+                "datapoint_shape": str(self.dataset["x_train_aug"].shape)
                 + "x"
                 + str(self.dataset["x_test"].shape),
                 "number_of_class": len(set(list(self.dataset["y_test"]))),
