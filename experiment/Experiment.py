@@ -44,34 +44,49 @@ class Experiment:
 
     def augmentation(self):
         if self.augment["name"] == "None":
+            self.dataset["x_train_aug"] = self.dataset["x_train"]
+            self.dataset["x_test_aug"] = self.dataset["x_test"]
             return
         x_train = reshape_new_to_old_format(self.dataset["x_train"])
         x_test = reshape_new_to_old_format(self.dataset["x_test"])
 
-        if self.augment.get('enter_label') == True:
-            x_train_aug = self.augment["function"](x_train, self.dataset["y_train"], **self.augment["params"])
-            x_test_aug = self.augment["function"](x_test, self.dataset["y_test"], **self.augment["params"])
+        if self.augment.get("enter_label") == True:
+            x_train_aug = self.augment["function"](
+                x_train, self.dataset["y_train"], **self.augment["params"]
+            )
+            x_test_aug = self.augment["function"](
+                x_test, self.dataset["y_test"], **self.augment["params"]
+            )
 
         else:
             x_train_aug = self.augment["function"](x_train, **self.augment["params"])
             x_test_aug = self.augment["function"](x_test, **self.augment["params"])
 
         # Concat original or not
-        if self.augment.get('concat_original') == True:
+        if self.augment.get("concat_original") == True:
             x_train_aug = np.concatenate((x_train_aug, x_train), axis=0)
             x_test_aug = np.concatenate((x_test_aug, x_test), axis=0)
-            self.dataset["y_train"] = np.concatenate((self.dataset["y_train"], self.dataset["y_train"]), axis=0)
-            self.dataset["y_test"] = np.concatenate((self.dataset["y_test"], self.dataset["y_test"]), axis=0)
+            self.dataset["y_train"] = np.concatenate(
+                (self.dataset["y_train"], self.dataset["y_train"]), axis=0
+            )
+            self.dataset["y_test"] = np.concatenate(
+                (self.dataset["y_test"], self.dataset["y_test"]), axis=0
+            )
 
         self.dataset["x_train_aug"] = reshape_old_to_new_format(x_train_aug)
         self.dataset["x_test_aug"] = reshape_old_to_new_format(x_test_aug)
 
     def train_classier(self):
-        if (self.dataset.get('x_train_aug').all() == None) or (self.dataset.get('x_test_aug').all() == None):
-            self.clasifier["function"].fit(self.dataset["x_train"], self.dataset["y_train"])
+        if (self.dataset.get("x_train_aug").all() == None) or (
+            self.dataset.get("x_test_aug").all() == None
+        ):
+            self.clasifier["function"].fit(
+                self.dataset["x_train"], self.dataset["y_train"]
+            )
         else:
-            print(f'Training Shape: {self.dataset["x_train_aug"].shape}, {self.dataset["y_train"].shape}')
-            self.clasifier["function"].fit(self.dataset["x_train_aug"], self.dataset["y_train"])
+            self.clasifier["function"].fit(
+                self.dataset["x_train_aug"], self.dataset["y_train"]
+            )
 
     def predict(self):
         self.y_pred = self.clasifier["function"].predict(self.dataset["x_test_aug"])
@@ -97,6 +112,7 @@ class Experiment:
                 + "x"
                 + str(self.dataset["x_test"].shape),
                 "number_of_class": len(set(list(self.dataset["y_test"]))),
+                "concat_original": self.augment.get("concat_original"),
             },
             {
                 "augmentation": {
@@ -106,7 +122,9 @@ class Experiment:
             },
             # [{"data": self.augment["params"], "file_name": "dict/augmentation.json"}],
         )
-        print(f'{self.clasifier["name"]}, {self.dataset["name"]}, ({self.augment["name"]}, {self.augment["params"]}) DONE')
+        print(
+            f'{self.clasifier["name"]}, {self.dataset["name"]}, ({self.augment["name"]}, {self.augment["params"]}) DONE'
+        )
 
     def run_all(self):
         self.load_UCR_dataset()
