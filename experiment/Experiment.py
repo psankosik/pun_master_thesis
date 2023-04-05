@@ -16,6 +16,7 @@ class Experiment:
         clasifier=None,
         dataset=None,
         augment={"name": str(None), "params": str(None)},
+        save_result=True,
         verbose=0,
     ):
         self.clasifier = clasifier
@@ -23,6 +24,7 @@ class Experiment:
         self.augment = augment
         self.y_pred = None
         self.evaluation_metric = {}
+        self.save_result = save_result
         self.verbose = verbose
 
     def load_UCR_dataset(self, dataset: str = None):
@@ -102,7 +104,7 @@ class Experiment:
             self.evaluation_metric["support"],
         ) = precision_recall_fscore_support(self.dataset["y_test"], self.y_pred)
 
-    def save_result(self):
+    def save_result_to_mlflow(self):
         mlflow_save_result(
             {"accuracy": self.evaluation_metric["accuracy"]},
             {"model": self.clasifier["name"]},
@@ -132,4 +134,4 @@ class Experiment:
         self.train_classier()
         self.predict()
         self.evaluate()
-        self.save_result()
+        self.save_result_to_mlflow()

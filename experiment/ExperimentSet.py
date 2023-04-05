@@ -3,10 +3,11 @@ from utils.hyperparameter import get_successors
 
 
 class ExperimentSet:
-    def __init__(self, classier, datasets=None, augments=None, verbose=0):
-        self.classier = classier
+    def __init__(self, classifier, datasets=None, augments=None, verbose=0, save_result=True):
+        self.classifier = classifier
         self.datasets = datasets
         self.augments = augments
+        self.save_result = save_result
 
     def run_all(self):
         # TODO: Refactor the if else
@@ -23,7 +24,7 @@ class ExperimentSet:
                         "concat_original": self.augments["concat_original"],
                         "params": {key: i},
                     }
-                    experiments = Experiment(self.classier, dataset, augment)
+                    experiments = Experiment(self.classifier, dataset, augment, self.save_result)
                     experiments.run_all()
         else:
             params_grid = get_successors(self.augments["params"])
@@ -40,5 +41,5 @@ class ExperimentSet:
                         "concat_original": self.augments["concat_original"],
                         "params": result,
                     }
-                    experiments = Experiment(self.classier, dataset, augment)
+                    experiments = Experiment(self.classifier, dataset, augment, self.save_result)
                     experiments.run_all()
