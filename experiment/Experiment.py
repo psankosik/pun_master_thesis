@@ -134,4 +134,5 @@ class Experiment:
         self.train_classier()
         self.predict()
         self.evaluate()
-        self.save_result_to_mlflow()
+        if self.save_result:
+            self.save_result_to_mlflow()
