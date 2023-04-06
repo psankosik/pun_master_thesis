@@ -1,0 +1,15 @@
+artifact_uri: ./mlruns/0/b6c84ee20e864cea94e75076c967d263/artifacts
+end_time: 1680766205844
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b6c84ee20e864cea94e75076c967d263
+run_name: 06/04/2023_14:30:05_b3NzKfKWwiW6eArFDRqYHU
+run_uuid: b6c84ee20e864cea94e75076c967d263
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1680766205631
+status: 3
+tags: []
+user_id: pongpanod.san.adm
