@@ -3,9 +3,18 @@ from utils.hyperparameter import get_successors
 
 
 class ExperimentSet:
-    def __init__(self, classifier, datasets=None, augments=None, verbose=0, save_result=True):
+    def __init__(
+        self,
+        classifier,
+        datasets=None,
+        preprocess={"name": str(None), "params": str(None)},
+        augments={"name": str(None), "params": str(None)},
+        verbose=0,
+        save_result=True,
+    ):
         self.classifier = classifier
         self.datasets = datasets
+        self.preprocess = preprocess
         self.augments = augments
         self.save_result = save_result
 
@@ -24,7 +33,13 @@ class ExperimentSet:
                         "concat_original": self.augments["concat_original"],
                         "params": {key: i},
                     }
-                    experiments = Experiment(self.classifier, dataset, augment, self.save_result)
+                    experiments = Experiment(
+                        self.classifier,
+                        dataset,
+                        self.preprocess,
+                        augment,
+                        self.save_result,
+                    )
                     experiments.run_all()
         else:
             params_grid = get_successors(self.augments["params"])
@@ -41,5 +56,11 @@ class ExperimentSet:
                         "concat_original": self.augments["concat_original"],
                         "params": result,
                     }
-                    experiments = Experiment(self.classifier, dataset, augment, self.save_result)
+                    experiments = Experiment(
+                        self.classifier,
+                        dataset,
+                        self.preprocess,
+                        augment,
+                        self.save_result,
+                    )
                     experiments.run_all()

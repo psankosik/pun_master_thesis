@@ -16,6 +16,7 @@ def mlflow_save_result(
     metrics: dict[any, str],
     model_param: dict[any, str],
     data_param: dict[any, str],
+    pre_param: dict[any, str],
     aug_param: dict[any, str],
     jsons: list[dict] = list(),
 ):
@@ -28,6 +29,7 @@ def mlflow_save_result(
         mlflow.log_metrics(metrics)
         mlflow.log_params(model_param)
         mlflow.log_params(data_param)
+        mlflow.log_params(pre_param)
         mlflow.log_params(aug_param)
         for i in jsons:
             mlflow.log_dict(i["data"], i["file_name"])
