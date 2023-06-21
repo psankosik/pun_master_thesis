@@ -11,7 +11,7 @@ def query_runs(filter_string: str, order_by: str = "params.dataset ASC"):
     return runs
 
 
-def query_augmented_result(augment_name, augment_params):
+def query_augmented_result(augment_name, augment_params, model_name: str):
     params_keys = list(augment_params.keys())
     filter_string = (
         "params.augmentation LIKE"
@@ -26,6 +26,7 @@ def query_augmented_result(augment_name, augment_params):
 
     filter_string += '%"'
     runs = query_runs(filter_string)
+    runs = filter_model( model_name, runs)
     return runs
 
 
@@ -51,7 +52,7 @@ def query_hc(datasets: list) -> dict:
 
 
 def compare_result(
-    query_list: list, compare_with: list = ["baseline"], dataset_selection=3.0
+    query_list: list, model_name: str, compare_with: list = ["baseline"], dataset_selection=3.0
 ):
     datasets = read_UCR_dataset_name(mySelection=dataset_selection)
     variation_table_index = []
@@ -59,7 +60,7 @@ def compare_result(
     all_variation_acc_list = []
     for i in query_list:
         # Query each augmented variation result
-        query_result = query_augmented_result(i["augment_name"], i["augment_params"])
+        query_result = query_augmented_result(i["augment_name"], i["augment_params"], model_name)
         acc = clean(query_result, datasets)
 
         all_acc = {}
@@ -225,6 +226,29 @@ def calculate_diff(
     print_out_stat(df_clean, column0, column1)
     return df
 
+
+def filter_model(model_name: str, mlflow_runs: list):
+    """To filter mlflow runs with specify model name
+
+    Args:
+        model_name (str): _description_
+        mlflow_runs (list): _description_
+
+    Raises:
+        Exception: _description_
+
+    Returns:
+        _type_: _description_
+    """
+    result = []
+    for run in mlflow_runs:
+        if run.data.params['model'] == model_name:
+            result.append(run)
+
+    if result == []:
+        raise Exception('Model name not found')
+    
+    return result
 
 # def query_runs(filter_string: str, order_by: str = "params.dataset ASC"):
 #     client = MlflowClient()
