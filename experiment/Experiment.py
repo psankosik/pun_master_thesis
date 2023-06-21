@@ -109,7 +109,8 @@ class Experiment:
             """
             def get_augmented_dataset_filename(dataset_type):
                 augmented_dataset_folder = "Data_Augmented"
-                return f"{augmented_dataset_folder}/{self.dataset['name']}_{self.augment['name']}_{str(self.augment['params'])}_{dataset_type}.npy"
+                augmented_param = str(self.augment['params']).replace('{','(').replace('}',')').replace(' ','')
+                return f"{augmented_dataset_folder}/{self.dataset['name']}_{self.augment['name']}_{str(augmented_param)}_{dataset_type}.npy"
 
             train_augmented_dataset_filename = get_augmented_dataset_filename("TRAIN")
             test_augmented_dataset_filename = get_augmented_dataset_filename("TEST")
