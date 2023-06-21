@@ -2,7 +2,7 @@ import pandas as pd
 
 
 def read_UCR_dataset_name(filepath=None, bakeoff=True, mySelection=3.0):
-    df = pd.read_csv("DataSummary.csv")
+    df = pd.read_csv("Data/DataSummary.csv")
     if bakeoff:
         df = df[df["BakeOff"] == True]
         df = df[df["MySelection"] >= mySelection]["Name"].to_list()

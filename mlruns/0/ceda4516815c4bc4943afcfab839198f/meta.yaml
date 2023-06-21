@@ -1,0 +1,16 @@
+artifact_uri: ./mlruns/0/ceda4516815c4bc4943afcfab839198f/artifacts
+deleted_time: 1681911769066
+end_time: 1681901248131
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: ceda4516815c4bc4943afcfab839198f
+run_name: 19/04/2023_17:47:27_jd7CtdDRwR3PjwSvMxDRhz
+run_uuid: ceda4516815c4bc4943afcfab839198f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1681901248058
+status: 3
+tags: []
+user_id: pongpanod.san.adm
