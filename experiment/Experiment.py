@@ -9,7 +9,7 @@ from utils.read import reshape_new_to_old_format, reshape_old_to_new_format
 
 
 # TODO: Verbose
-# TODO: Feature unit-test:
+# TODO: Feature unit-test: taa
 # TODO: Describe Function: Get Experiment class information
 class Experiment:
     def __init__(
@@ -109,7 +109,7 @@ class Experiment:
             """
             def get_augmented_dataset_filename(dataset_type):
                 augmented_dataset_folder = "Data_Augmented"
-                augmented_param = str(self.augment['params']).replace('{','(').replace('}',')').replace(' ','')
+                augmented_param = str(self.augment['params']).replace('{','(').replace('}',')').replace(':','_').replace(' ','')
                 return f"{augmented_dataset_folder}/{self.dataset['name']}_{self.augment['name']}_{str(augmented_param)}_{dataset_type}.npy"
 
             train_augmented_dataset_filename = get_augmented_dataset_filename("TRAIN")
