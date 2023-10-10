@@ -10,13 +10,15 @@ class ExperimentSet:
         preprocess={"name": str(None), "params": str(None)},
         augments={"name": str(None), "params": str(None)},
         verbose=0,
-        save_result=True,
+        save_result=False,
+        save_data=False
     ):
         self.classifier = classifier
         self.datasets = datasets
         self.preprocess = preprocess
         self.augments = augments
         self.save_result = save_result
+        self.save_data = save_data
 
     def run_all(self):
         # TODO: Refactor the if else
@@ -39,6 +41,7 @@ class ExperimentSet:
                         self.preprocess,
                         augment,
                         self.save_result,
+                        self.save_data
                     )
                     experiments.run_all()
         else:
@@ -62,5 +65,6 @@ class ExperimentSet:
                         self.preprocess,
                         augment,
                         self.save_result,
+                        self.save_data
                     )
                     experiments.run_all()
