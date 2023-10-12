@@ -1,6 +1,8 @@
 import os
+import time
 import numpy as np
 
+from time import process_time
 from sktime.datasets import load_UCR_UEA_dataset
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
 
@@ -33,6 +35,10 @@ class Experiment:
         self.save_result = save_result
         self.save_data = save_data
         self.verbose = verbose
+        self.time_augmentation = {"wall": 0.0, "cpu": 0.0}
+        self.time_classification = {"wall": 0.0, "cpu": 0.0}
+        self.time_prediction = {"wall": 0.0, "cpu": 0.0}
+        self.time_total = {"wall": 0.0, "cpu": 0.0}
 
     def load_UCR_dataset(self, dataset: str = None):
         dataset_name = self.dataset if self.dataset else dataset
@@ -81,6 +87,9 @@ class Experiment:
             Performs the augmentation and returns the augmented data.
             """
 
+            cpu_start = process_time()
+            wall_start = time.time()
+
             def get_augmented_dataset_filename(dataset_type):
                 augmented_dataset_folder = "Data_Augmented"
                 augmented_param = (
@@ -120,6 +129,9 @@ class Experiment:
                 if self.save_data:
                     np.save(train_augmented_dataset_filename, x_train_aug)
                     np.save(test_augmented_dataset_filename, x_test_aug)
+
+            self.time_augmentation["cpu"] = round(process_time() - cpu_start, 4)
+            self.time_augmentation["wall"] = round(time.time() - wall_start, 4)
 
             return x_train_aug, x_test_aug
 
@@ -190,6 +202,9 @@ class Experiment:
             self.dataset["x_test_aug"] = reshape_old_to_new_format(x_test_aug)
 
     def train_classier(self):
+        cpu_start = process_time()
+        wall_start = time.time()
+
         if (self.dataset.get("x_train_aug").all() == None) or (
             self.dataset.get("x_test_aug").all() == None
         ):
@@ -201,8 +216,17 @@ class Experiment:
                 self.dataset["x_train_aug"], self.dataset["y_train"]
             )
 
+        self.time_classification["cpu"] = round(process_time() - cpu_start, 4)
+        self.time_classification["wall"] = round(time.time() - wall_start, 4)
+
     def predict(self):
+        cpu_start = process_time()
+        wall_start = time.time()
+
         self.y_pred = self.clasifier["function"].predict(self.dataset["x_test_aug"])
+
+        self.time_prediction["cpu"] = round(process_time() - cpu_start, 4)
+        self.time_prediction["wall"] = round(time.time() - wall_start, 4)
 
     def evaluate(self):
         self.evaluation_metric["accuracy"] = accuracy_score(
@@ -216,30 +240,69 @@ class Experiment:
         ) = precision_recall_fscore_support(self.dataset["y_test"], self.y_pred)
 
     def save_result_to_mlflow(self):
+        def calculate_total_time():
+            self.time_total["cpu"] = round(
+                self.time_augmentation["cpu"]
+                + self.time_classification["cpu"]
+                + self.time_prediction["cpu"],
+                4,
+            )
+            self.time_total["wall"] = round(
+                self.time_augmentation["wall"]
+                + self.time_classification["wall"]
+                + self.time_prediction["wall"],
+                4,
+            )
+
+        def assigning_variable():
+            acc_metrics = {"accuracy": self.evaluation_metric["accuracy"]}
+            time_metrics = {
+                "time_augmentation": str(self.time_augmentation),
+                "time_classification": str(self.time_classification),
+                "time_prediction": str(self.time_prediction),
+                "time_total": str(self.time_total),
+            }
+            model_param = {"model": self.clasifier["name"]}
+            data_param = {
+                "dataset": self.dataset["name"],
+                "datapoint_shape": str(self.dataset["x_train_aug"].shape)
+                + "x"
+                + str(self.dataset["x_test"].shape),
+                "number_of_class": len(set(list(self.dataset["y_test"]))),
+                "concat_original": self.augment.get("concat_original"),
+            }
+            pre_param = {
+                "preprocess": {
+                    "name": self.preprocess["name"],
+                    "params": self.preprocess.get("params", "None"),
+                },
+            }
+            aug_param = {
+                "augmentation": {
+                    "name": self.augment["name"],
+                    "params": self.augment.get("params", "None"),
+                },
+            }
+
+            return {
+                "acc_metrics": acc_metrics,
+                "time_metrics": time_metrics,
+                "model_param": model_param,
+                "data_param": data_param,
+                "pre_param": pre_param,
+                "aug_param": aug_param,
+            }
+
         if self.save_result:
+            calculate_total_time()
+            result = assigning_variable()
             mlflow_save_result(
-                {"accuracy": self.evaluation_metric["accuracy"]},
-                {"model": self.clasifier["name"]},
-                {
-                    "dataset": self.dataset["name"],
-                    "datapoint_shape": str(self.dataset["x_train_aug"].shape)
-                    + "x"
-                    + str(self.dataset["x_test"].shape),
-                    "number_of_class": len(set(list(self.dataset["y_test"]))),
-                    "concat_original": self.augment.get("concat_original"),
-                },
-                {
-                    "preprocess": {
-                        "name": self.preprocess["name"],
-                        "params": self.preprocess.get("params", "None"),
-                    },
-                },
-                {
-                    "augmentation": {
-                        "name": self.augment["name"],
-                        "params": self.augment.get("params", "None"),
-                    },
-                },
+                result["acc_metrics"],
+                result["time_metrics"],
+                result["model_param"],
+                result["data_param"],
+                result["pre_param"],
+                result["aug_param"],
                 # [{"data": self.augment["params"], "file_name": "dict/augmentation.json"}],
             )
         print(
@@ -254,25 +317,3 @@ class Experiment:
         self.predict()
         self.evaluate()
         self.save_result_to_mlflow()
-
-
-# {
-#     "Metrics": {
-#         "augmentation": {
-#             "wall": 100,
-#             "cpu": 100
-#         },
-#         "classification": {
-#             "wall": 100,
-#             "cpu": 100
-#         },
-#         "prediction": {
-#             "wall": 100,
-#             "cpu": 100
-#         },
-#         "total": {
-#             "wall": 100,
-#             "cpu": 100            
-#         }
-#     }
-# }

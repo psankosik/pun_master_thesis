@@ -11,7 +11,7 @@ class ExperimentSet:
         augments={"name": str(None), "params": str(None)},
         verbose=0,
         save_result=False,
-        save_data=False
+        save_data=False,
     ):
         self.classifier = classifier
         self.datasets = datasets
@@ -41,7 +41,7 @@ class ExperimentSet:
                         self.preprocess,
                         augment,
                         self.save_result,
-                        self.save_data
+                        self.save_data,
                     )
                     experiments.run_all()
         else:
@@ -65,6 +65,6 @@ class ExperimentSet:
                         self.preprocess,
                         augment,
                         self.save_result,
-                        self.save_data
+                        self.save_data,
                     )
                     experiments.run_all()
