@@ -1,0 +1,1 @@
+{'name': 'fourier_transform', 'params': {'sampling_rate_mul': 8, 'N': 512}}

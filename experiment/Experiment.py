@@ -228,6 +228,7 @@ class Experiment:
         self.time_prediction["cpu"] = round(process_time() - cpu_start, 4)
         self.time_prediction["wall"] = round(time.time() - wall_start, 4)
 
+    from sklearn.metrics import accuracy_score, precision_recall_fscore_support
     def evaluate(self):
         self.evaluation_metric["accuracy"] = accuracy_score(
             self.dataset["y_test"], self.y_pred
