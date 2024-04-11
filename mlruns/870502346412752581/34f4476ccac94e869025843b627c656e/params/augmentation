@@ -1,0 +1,1 @@
+{'name': 'apply_double_expo_smoothing', 'params': {'alpha': 0.3, 'beta': 0.9}}
