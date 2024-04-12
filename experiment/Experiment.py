@@ -81,7 +81,6 @@ class Experiment:
         """
         This method applies a given augmentation strategy to the dataset.
         """
-
         def perform_augmentation(x_train, x_test) -> None:
             """
             Performs the augmentation and returns the augmented data.
@@ -112,12 +111,21 @@ class Experiment:
                 x_test_aug = np.load(test_augmented_dataset_filename)
             else:
                 if self.augment.get("enter_label"):
-                    x_train_aug = self.augment["function"](
-                        x_train, self.dataset["y_train"], **self.augment["params"]
-                    )
-                    x_test_aug = self.augment["function"](
-                        x_test, self.dataset["y_test"], **self.augment["params"]
-                    )
+                    from classes.augmentation.augmentation import smote
+                    if self.augment['name'] == smote.__name__:
+                        # Augment only train, becuase smote will change ratio of the label. With test data we assume we don't have access to label.
+                        x_train_aug, y_train_aug = self.augment["function"](
+                            x_train, self.dataset["y_train"], **self.augment["params"]
+                        )
+                        x_test_aug = x_test
+                        self.dataset["y_train"] = y_train_aug
+                    else:    
+                        x_train_aug = self.augment["function"](
+                            x_train, self.dataset["y_train"], **self.augment["params"]
+                        )
+                        x_test_aug = self.augment["function"](
+                            x_test, self.dataset["y_test"], **self.augment["params"]
+                        )
                 else:
                     x_train_aug = self.augment["function"](
                         x_train, **self.augment["params"]
