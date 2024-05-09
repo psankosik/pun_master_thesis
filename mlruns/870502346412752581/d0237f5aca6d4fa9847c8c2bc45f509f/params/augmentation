@@ -1,0 +1,1 @@
+{'name': 'smote', 'params': {'sampling_strategy': 'not majority', 'k_neighbors': 1}}
